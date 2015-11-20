@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta name="author" content="Zefoa">
+		<meta charset="UTF-8">
+		<title>The Game of Guessing Color</title>
+	</head>
+	<body onload="do_game()">
+		<script>
+			var  randColor, 
+				colorInput,
+				randInex,
+				finished = false,
+				colors = ["aqua", "blue", "cyan", "darkgray",  "gray", "red", "tan",  "yellow", "white"],
+				guessTime = 0;
+
+			function do_game() {				
+				randInex = Math.floor(Math.random() * colors.length);
+				randColor = colors[randInex];
+				alert("The randColor is " + randColor);
+				while(!finished) {
+					colorInput = prompt("I am thinking one of these colors:\n\n" + colors.join(', ') + "\n\nWhat color am I thinking of?");
+					finished = check_guess();
+				}
+			}
+
+			function check_guess() {
+				guessTime ++; 
+				if(!colors.some(function(val){
+					return val == colorInput;
+				})) {
+					alert("Sorry,I don’t recognize that color!\n\n" + "Please try again!");
+					return false;
+				}
+				if(colorInput > randColor) {
+					alert("Sorry,Your input is alphabetically higher than mine!\n\n" + "Please try again!");
+					return false;
+				}
+				if(colorInput < randColor) {
+					alert("Sorry,Your input is alphabetically lower than mine!\n\n" + "Please try again!");
+					return false;
+				}
+				if(colorInput == randColor) {
+					myBody=document.getElementsByTagName("body")[0];
+					myBody.style.background=randColor;
+					alert("Congratulations!You have guessed the color!\n\n" +  "You took " + guessTime + " guesses!\n\nYou can see the color in the background.")
+					return true;
+				}
+			}
+		</script>
+	</body>
+</html>
